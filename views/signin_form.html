@@ -1,0 +1,58 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>AvoidFreeRider</title>
+    <style>
+        .box {
+            margin-top: 10%;
+        }
+        .form_box {
+            padding: 50px;
+            background-color: lightblue
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container box">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col form_box">
+                <div class="">
+                    <h2>Sign in</h2>
+                    <form action="/signin">
+                        <div class="form-group">
+                            <label for="id">ID:</label>
+                            <input type="text" class="form-control" id="id" placeholder="Enter ID" name="id">
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Password:</label>
+                            <input type="password" class="form-control" id="pwd" placeholder="Enter password"
+                                name="pswd">
+                        </div>
+                        <div class="form-group">
+                                <label for="pwdc">Password confirem:</label>
+                                <input type="password" class="form-control" id="pwdc" placeholder="Enter password"
+                                    name="pswdc">
+                            </div>
+                            <div class="form-group">
+                                    <label for="name">Name:</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name">
+                                </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+</body>
+
+</html>
