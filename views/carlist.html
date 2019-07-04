@@ -1,0 +1,85 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(() => {
+            $.ajax({
+                type: 'GET',
+                url: '/api/carlist',
+                success: function (data) {
+                    console.log('succerss');
+                    console.log(data);
+                    $.each(data, function (i, item) {
+                        $('#list').append(`
+                       <tr>
+                            <td>${data[i].carNumber}</td>
+                            <td>${data[i].company}</td>
+                            <td>${data[i].model}</td>
+                            <td>${data[i].numOfAccident}</td>
+                            <td>${data[i].numOfOwnerChange}</td>
+                            <td>${data[i].owner}</td>
+                        </tr>
+                       `)
+                    })
+
+
+                },
+                error: function (err) {
+                    console.log('fail');
+                    console.log(err);
+                }
+            });
+
+            $('#submit').click(function () {
+        
+                console.log('1번 지역 ');
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/regcar',
+                    dataType: 'json',
+                    data: rewData,
+
+                    success: function (data) {
+                        console.log('succerss');
+                        console.log(data);
+                    },
+                    error: function (err) {
+                        console.log('err');
+                    }
+
+                })
+            });
+
+
+        })
+
+
+    </script>
+
+</head>
+
+<body>
+    <p>test</p>
+    <form id="regfom" name="regfom">
+        <input type="text" name="carNumber" id="carNumber">
+        <input type="text" name="company" id="company">
+        <input type="text" name="model" id="model">
+        <input type="text" name="owner" id="owner">
+        <input type="number" name="numOfAccident" id="numOfAccident">
+        <input type="number" name="numOfOwnerChange" id="numOfOwnerChange">
+        <input type="button" id="submit" value="제출">
+    </form>
+
+
+    <table id="list">
+
+
+    </table>
+</body>
+
+</html>

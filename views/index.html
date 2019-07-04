@@ -5,66 +5,217 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <title>AvoidFreeRider</title>
     <style>
-        .center {
-            width: 800em;
-            margin-left: 60%;
-            margin-right: 0%;
-        }
-
         .index_image {
+            background-image: url("/image/image6.jpg");
             width: 100%;
-            height: auto;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .index_image img {
-            max-width: 100%;
-            height: auto;
-            display: flex;
+            background-size: cover;
+            background-position: 50%;
+            height: 450px;
+            position: relative;
+            text-align: center;
             align-items: center;
             justify-content: center;
-            position: relative;
+            color: rgb(26, 228, 228);
         }
+
+        .index_image h1 {
+            padding-top: 150px;
+        }
+
+        .find_input {
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
+
+        .side {
+            background-color: #f4f5f6;
+            width: 100%;
+            height: 80px;
+            text-align: center;
+            padding: 5px;
+            margin: 0;
+        }
+
+        .icon {
+            font-size: 40px;
+        }
+
+        .rcmnd {
+            text-align: center;
+            padding-top: 20px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .rcm_card {}
     </style>
 </head>
 
 <body>
-    <nav class="navbar bg-dark navbar-dark">
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <!-- Brand/logo -->
 
         <a class="navbar-brand" href="#">Avoid Free Rider</a>
-
-        <!-- Links -->
-        <ul class="nav justify-content-end">
-            <li class="nav-item">
-                <a class="nav-link" href="#">소개</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">모임등록</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">모임</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">공모전</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/login_form">로그인</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/signin_form">회원가입</a>
-            </li>
-        </ul>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- Links -->
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">소개</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">모임등록</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">모임</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">공모전</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/carlist">test</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login_form">로그인</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/signin_form">회원가입</a>
+                </li>
+                <li class="nav-item">
+                        <a class="nav-link" href="/kakaolist">프렌즈</a>
+                </li>
+            </ul>
+        </div>
     </nav>
     <div class="index_image">
-        <img src="/public/image/image5.jpg" alt="back">
+        <h1>프리라이더 없는 모임 찾기</h1>
+        <div class="input-group find_input">
+            <input type="text" class="form-control" placeholder="어떤 모임을 찾으시나요?" id="find" name="find">
+            <div class="input-group-append">
+                <span class="input-group-text">찾기</span>
+            </div>
+        </div>
+
     </div>
+
+    <div class="row side">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div><i class="fas fa-book icon"></i></div>
+                    <p>스터디</p>
+                </div>
+                <div class="col-sm-3">
+                    <div><i class="fas fa-comments-dollar icon"></i></div>
+                    <p>공모전</p>
+                </div>
+                <div class="col-sm-3">
+                    <div><i class="fas fa-users icon"></i></div>
+                    <p>프로젝트</p>
+                </div>
+                <div class="col-sm-3">
+                    <div><i class="fas fa-bullhorn icon"></i></div>
+                    <p>홍보</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+    <div class="rcmnd">
+        <h1>이 달의 추천 공모전</h1>
+        <div class="row">
+            <div class="col-sm-6 col-md-3">
+                <div class="rcm_card">
+                    <img class="card-img-top" src="/image/default.jpg" alt="Card image" style="max-width:100%">
+                    <div class="card-body">
+                        <h4 class="card-title">2019년 한글날 예쁜 우리말 공모전</h4>
+                        <p class="card-text">Some example text some example text. John Doe is an architect and engineer
+                        </p>
+                        <a href="#" class="btn btn-primary">See Profile</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="rcm_card">
+                    <img class="card-img-top" src="/image/default.jpg" alt="Card image" style="max-width:100%">
+                    <div class="card-body">
+                        <h4 class="card-title">2019년 한글날 예쁜 우리말 공모전</h4>
+                        <p class="card-text">Some example text some example text. John Doe is an architect and engineer
+                        </p>
+                        <a href="#" class="btn btn-primary">See Profile</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="rcm_card">
+                    <img class="card-img-top" src="/image/default.jpg" alt="Card image" style="max-width:100%">
+                    <div class="card-body">
+                        <h4 class="card-title">2019년 한글날 예쁜 우리말 공모전</h4>
+                        <p class="card-text">Some example text some example text. John Doe is an architect and engineer
+                        </p>
+                        <a href="#" class="btn btn-primary">See Profile</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="rcm_card">
+                    <img class="card-img-top" src="/image/default.jpg" alt="Card image" style="max-width:100%">
+                    <div class="card-body">
+                        <h4 class="card-title">2019년 한글날 예쁜 우리말 공모전</h4>
+                        <p class="card-text">Some example text some example text. John Doe is an architect and engineer
+                        </p>
+                        <a href="#" class="btn btn-primary">See Profile</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="rcm_card">
+                    <img class="card-img-top" src="/image/default.jpg" alt="Card image" style="max-width:100%">
+                    <div class="card-body">
+                        <h4 class="card-title">2019년 한글날 예쁜 우리말 공모전</h4>
+                        <p class="card-text">Some example text some example text. John Doe is an architect and engineer
+                        </p>
+                        <a href="#" class="btn btn-primary">See Profile</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="rcm_card">
+                    <img class="card-img-top" src="/image/default.jpg" alt="Card image" style="max-width:100%">
+                    <div class="card-body">
+                        <h4 class="card-title">2019년 한글날 예쁜 우리말 공모전</h4>
+                        <p class="card-text">Some example text some example text. John Doe is an architect and engineer
+                        </p>
+                        <a href="#" class="btn btn-primary">See Profile</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="rcm_card">
+                    <img class="card-img-top" src="/image/default.jpg" alt="Card image" style="max-width:100%">
+                    <div class="card-body">
+                        <h4 class="card-title">2019년 한글날 예쁜 우리말 공모전</h4>
+                        <p class="card-text">Some example text some example text. John Doe is an architect and engineer
+                        </p>
+                        <a href="#" class="btn btn-primary">See Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </body>
 

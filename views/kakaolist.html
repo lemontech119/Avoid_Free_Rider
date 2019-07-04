@@ -1,0 +1,51 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>Document</title>
+    <script>
+        $(() => {
+            $.ajax({
+                type: 'GET',
+                url: '/api/kakaolist',
+                success: function (data) {
+                    console.log('succerss');
+                    console.log(data);
+                    $.each(data, function (i, item) {
+                        $('#list').append(`
+                                <img src="${data[i].img}" alt="1">
+                                <h1>${data[i].name}</h1>
+                                <p>${data[i].intro}</p>
+                                <br>
+                           `)
+                    })
+
+
+                },
+                error: function (err) {
+                    console.log('fail');
+                    console.log(err);
+                }
+            })
+
+        })
+    </script>
+    <style>
+    
+    </style>
+</head>
+
+<body>
+<div id="list" class="container"></div>
+</body>
+
+</html>
