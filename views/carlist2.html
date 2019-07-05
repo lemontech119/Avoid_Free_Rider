@@ -1,0 +1,43 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        
+    </script>
+
+</head>
+
+<body>
+    <p>test</p>
+    <form id="regfom" name="regform">
+        <input type="text" name="carNumber" id="carNumber">
+        <input type="text" name="company" id="company">
+        <input type="text" name="model" id="model">
+        <input type="text" name="owner" id="owner">
+        <input type="number" name="numOfAccident" id="numOfAccident">
+        <input type="number" name="numOfOwnerChange" id="numOfOwnerChange">
+        <input type="button" id="submit" value="제출">
+    </form>
+
+    <table id="list">
+        <% for(let i=0; i<obj.length; i++){ %>
+        <tr>
+            <td><%= obj[i].carNumber%></td>
+            <td><%= obj[i].company%></td>
+            <td><%= obj[i].model%></td>
+            <td><%= obj[i].numOfAccident%></td>
+            <td><%= obj[i].numOfOwnerChange%></td>
+            <td><%= obj[i].owner%></td>
+        </tr>
+        <% }%>
+    </table>
+
+    
+</body>
+
+</html>

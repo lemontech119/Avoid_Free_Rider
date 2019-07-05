@@ -7,7 +7,23 @@
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
+
+
+
         $(() => {
+            function serializeObject($form) {
+                console.log($form)
+                console.log('이 함수 작동 하나?1');
+                let unindexed_array = $form.serializeArray();
+                console.log(unindexed_array);
+                let indexed_array = {};
+                console.log('이 함수 작동 하나?3');
+                $.map(unindexed_array, function (n, i) {
+                    indexed_array[n['name']] = n['value'];
+                });
+                console.log(indexed_array);
+                return indexed_array;
+            }
             $.ajax({
                 type: 'GET',
                 url: '/api/carlist',
@@ -36,17 +52,31 @@
             });
 
             $('#submit').click(function () {
-        
+                let newData = serializeObject($('form[name=regform]'));;
                 console.log('1번 지역 ');
                 $.ajax({
+
                     type: 'POST',
                     url: '/api/regcar',
                     dataType: 'json',
-                    data: rewData,
+                    data: newData,
 
                     success: function (data) {
-                        console.log('succerss');
+                        console.log('success');
                         console.log(data);
+                        $.each(data, function (i, item) {
+                            $('#list').append(`
+                        <tr>
+                            <td>${data[i].carNumber}</td>
+                            <td>${data[i].company}</td>
+                            <td>${data[i].model}</td>
+                            <td>${data[i].numOfAccident}</td>
+                            <td>${data[i].numOfOwnerChange}</td>
+                            <td>${data[i].owner}</td>
+                        </tr>
+                       `)
+                        })
+
                     },
                     error: function (err) {
                         console.log('err');
@@ -65,7 +95,7 @@
 
 <body>
     <p>test</p>
-    <form id="regfom" name="regfom">
+    <form id="regfom" name="regform">
         <input type="text" name="carNumber" id="carNumber">
         <input type="text" name="company" id="company">
         <input type="text" name="model" id="model">
@@ -80,6 +110,9 @@
 
 
     </table>
+    <script>
+
+    </script>
 </body>
 
 </html>
