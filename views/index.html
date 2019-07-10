@@ -10,7 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    
+
     <title>AvoidFreeRider</title>
     <style>
         .index_image {
@@ -55,7 +55,6 @@
             padding-left: 20px;
             padding-right: 20px;
         }
-
     </style>
 </head>
 
@@ -83,17 +82,23 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">공모전</a>
                 </li>
+
+                <% if(user){ %>
                 <li class="nav-item">
-                    <a class="nav-link" href="/carlist">test</a>
+                    <a class="nav-link" href="/logout">로그아웃</a>
                 </li>
+                <% }else{ %>
                 <li class="nav-item">
                     <a class="nav-link" href="/login_form">로그인</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/signin_form">회원가입</a>
                 </li>
+                <% } %>
+
+
                 <li class="nav-item">
-                        <a class="nav-link" href="/kakaolist">프렌즈</a>
+                    <a class="nav-link" href="/kakaolist">프렌즈</a>
                 </li>
             </ul>
         </div>
@@ -108,9 +113,9 @@
         </div>
 
     </div>
-    
-    <h1><%= user.userid %> 님환영합니다.</h1>
-    
+
+
+
     <div class="row side">
         <div class="col-sm-3"></div>
         <div class="col-sm-6">

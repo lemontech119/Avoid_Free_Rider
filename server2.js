@@ -5,6 +5,8 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const hasher = require('pbkdf2-password')();
 const morgan = require('morgan');
+const fs = require('fs');
+const flash = require("connect-flash");
 const app = express();
 const port = 3000;
 
@@ -27,7 +29,7 @@ const sampleCarList = [{
 }
 ];
 const kakao = [{
-    img: 'image/brown.jpg',
+    img: 'image/ryan.jpg',
     name: '라이언',
     intro: '갈기가 없는 것이 콤플렉스인 수사자'
 },
@@ -42,20 +44,30 @@ const kakao = [{
     intro: '겁 많고 마음 약한 오리 튜브'
 }];
 
-const sampleUserList = [{
-    userid : "test",
-    password: 1234,
-    name : "Ryan",
-    email : "test@naver.com"
+// const sampleUserList = {
+//     "user01" : {
+//     userid : "test",
+//     password: 1234,
+//     name : "Ryan",
+//     email : "test@naver.com",
+//     salt : ""
+//     },
+//     "user02" :{
+//     userid : "aaa",
+//     password: "aaa",
+//     name : "aaa",
+//     email : "aaa@naver.com",
+//     salt : ""
+//      }
+// };
 
-},
-{
-    userid : "aaa",
-    password: "aaa",
-    name : "aaa",
-    email : "aaa@naver.com"
-
-}]
+// fs.writeFileSync('data/userlist.json', JSON.stringify(sampleUserList, null, 4));
+let sampleUserList = {};
+if (fs.existsSync('data/userlist.json')){
+    let rawdata = fs.readFileSync('data/userlist.json');
+    sampleUserList = JSON.parse(rawdata);
+    console.log(sampleUserList);    
+}
 
 
 // html 렌더링 설정
@@ -80,8 +92,24 @@ app.use(session({
     saveUninitialized: true,
     store: new FileStore()
 }));
+
+
+app.use(function(req, res, next){
+    res.locals.user = req.session.user;
+    next();
+})
 app.get('/', (req, res) => {
+
     res.render('index.html');
+})
+app.get('/logout', (req, res)=>{
+    console.log('로그아웃시도1');
+    console.log(req.session.user);
+    req.session.destroy(function () {
+        req.session;
+    });
+    console.log('로그아웃시도2');
+    res.redirect('/'); 
 })
 
 app.get('/signin_form', (req, res) => {
@@ -119,7 +147,9 @@ app.post('/signup', (req, res) => {
             name: name,
             email: email
         }
-        sampleUserList.push(user);
+        sampleUserList[userid] = user;
+        fs.writeFileSync('data/userlist.json', JSON.stringify(sampleUserList, null, 4));
+
         console.log('user added : ', user);
         res.redirect('/login_form');
     });
@@ -138,53 +168,38 @@ app.post('/login', (req, res) => {
     console.log('userid = ', userid);
     console.log('password = ', password);
     console.log('userlist = ', sampleUserList);
-    let bFound = false;
- 
-    for (let i = 0; i < sampleUserList.length; i++) {
-       
-        let user = sampleUserList[i];
-        console.log(sampleUserList[i]);
-        if (userid === user.userid) {
-            console.log('[found] userid = ', userid);
-            bFound = true;
- 
-            return hasher({
-                password: password,
-                salt: user.salt
-            }, function (err, pass, salt, hash) {
-                if (err) {
-                    console.log('ERR : ', err);
-                    //req.flash('fmsg', '오류가 발생했습니다.');
-                   
-                }
-                if (hash === user.password) {
-                    console.log('INFO : ', userid, ' 로그인 성공')
-                   
-                    req.session.user = sampleUserList[i];
-                    req.session.save(function () {
-                        res.redirect('/login_success');
-                    })
-                    return;
-                } else {
-                   // req.flash('fmsg', '패스워드가 맞지 않습니다.');
-                   res.redirect('/login_form');
-                   return;
-                }
-            });
-        }
-        console.log('비밀번호 에러 확인');
-        if (bFound) break;
+    let user = sampleUserList[userid];
+    
+    if(user){
+        hasher({
+            password: password,
+            salt: user.salt
+        }, function (err, pass, salt, hash) {
+            if (err) {
+                console.log('ERR : ', err);
+                //req.flash('fmsg', '오류가 발생했습니다.');
+                res.redirect('login_form');
+            }
+            if (hash === user.password) {
+                console.log('INFO : ', userid, ' 로그인 성공')
+               
+                req.session.user = sampleUserList[userid];
+                req.session.save(function () {
+                    res.redirect('/login_success');
+                })
+                return;
+            } else {
+               // req.flash('fmsg', '패스워드가 맞지 않습니다.');
+               res.redirect('/login_form');
+               return;
+            }
+        });
+    }else{
+        console.log('아이디 없음');
+        res.redirect('/login_form');
+        return;
     }
- 
-    //req.flash.msg('')
-    if(!bFound) {
-        console.log('not found');
-    }
- 
-    //req.flash('fmsg', '사용자가 없습니다.');
-    res.redirect('/login_form');
-   
-   
+    console.log("뒤에까지 가나요?")
  });
  
 app.get('/login_success', (req, res) => {
@@ -207,9 +222,14 @@ app.get('/api/kakaolist', (req, res) => {
     res.json(kakao);
 })
 app.get('/kakaolist', (req, res) => {
-    //테스트용
-    console.log('test2');
-    res.render('kakaolist.html');
+    if(req.session.user){
+        console.log('로그인된 사용자');
+        res.render('kakaolist.html');
+    }else{
+        console.log('로그인 안됨. 로그인 페이지 이동');
+        res.redirect('/login_form');
+    }
+
 })
 
 app.post('/api/regcar', (req, res) => {
@@ -272,6 +292,11 @@ app.get('/test/getsession', (req, res) => {
         myname: req.session.myname,
         myid: req.session.myid
     });
+})
+
+app.get('/test/setlocals', (req,res) => {
+    res.locals.test2 = 'test2';
+    res.render('test/locals.html', {test1: 'test1'});
 })
 
 
