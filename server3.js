@@ -81,14 +81,16 @@ app.use(function(req, res, next){
     res.locals.user = req.session.user;
     next();
 })
-app.get('/', (req, res) => {
 
-    res.render('index.html');
-})
-app.get('/test', (req, res) => {
+//require('./part.js');
+//console.log(part.a)
 
-    res.render('index2.html');
-})
+let test_router = require('./router/moduletest');
+let main_router = require('./router/mainrouter');
+app.use('/test', test_router);
+app.use(main_router);
+
+
 app.get('/logout', (req, res)=>{
     console.log('로그아웃시도1');
     console.log(req.session.user);
@@ -242,49 +244,6 @@ app.get('/main', (req, res) => {
 })
 
 
-app.get('/test/setCookie', (req, res) => {
-    console.log('/test/setCookie');
-    res.cookie('user', { 'name': '안동원', "id": "user01" }, {
-        maxAge: 5000,
-        httpOnly: true
-    });
-
-
-    res.redirect('/test/getCookie');
-});
-
-app.get('/test/getCookie', (req, res) => {
-    console.log('/test/getCookie');
-
-    res.render('./test/getcookie.html', { cookie: req.cookies });
-
-});
-
-
-app.get('/test/setsession', (req, res) => {
-    console.log('/test/setsession');
-
-    req.session.myname = '홍길동';
-    req.session.myid = 'hong'
-    req.session.save(function () {
-        res.redirect('/test/getsession');
-    })
-})
-
-app.get('/test/getsession', (req, res) => {
-    console.log('/test/getsession');
-    console.log('session.myname = ', req.session.myname);
-
-    res.render('test/getsession.html', {
-        myname: req.session.myname,
-        myid: req.session.myid
-    });
-})
-
-app.get('/test/setlocals', (req,res) => {
-    res.locals.test2 = 'test2';
-    res.render('test/locals.html', {test1: 'test1'});
-})
 
 app.post('/api/filter', (req, res) => {
     console.log(req.body);

@@ -1,0 +1,50 @@
+.index_image {
+    background-image: url("/image/image6.jpg");
+    width: 100%;
+    background-size: cover;
+    background-position: 50%;
+    height: 450px;
+    position: relative;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    color: rgb(26, 228, 228);
+}
+
+.index_image h1 {
+    padding-top: 150px;
+}
+
+.find_input {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.side {
+    background-color: #f4f5f6;
+    width: 100%;
+    height: 80px;
+    text-align: center;
+    padding: 5px;
+    margin: 0;
+}
+.icon {
+    font-size: 40px;
+}
+
+.rcmnd {
+    text-align: center;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.back-color {
+    background-color: #363c44 !important;
+}
+
+.nav-font {
+    font-size: 20px;
+    padding-right: 5px;
+    padding-left: 5px;
+}

@@ -1,106 +1,14 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-    <title>AvoidFreeRider</title>
+    <% include ./inc/header.ejs%>
     <style>
-        .index_image {
-            background-image: url("/image/image6.jpg");
-            width: 100%;
-            background-size: cover;
-            background-position: 50%;
-            height: 450px;
-            position: relative;
-            text-align: center;
-            align-items: center;
-            justify-content: center;
-            color: rgb(26, 228, 228);
-        }
 
-        .index_image h1 {
-            padding-top: 150px;
-        }
-
-        .find_input {
-            margin-left: auto;
-            margin-right: auto;
-            width: 50%;
-        }
-
-        .side {
-            background-color: #f4f5f6;
-            width: 100%;
-            height: 80px;
-            text-align: center;
-            padding: 5px;
-            margin: 0;
-        }
-
-        .icon {
-            font-size: 40px;
-        }
-
-        .rcmnd {
-            text-align: center;
-            padding-top: 20px;
-            padding-left: 20px;
-            padding-right: 20px;
-        }
     </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-        <!-- Brand/logo -->
-
-        <a class="navbar-brand" href="#">Avoid Free Rider</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <!-- Links -->
-            <ul class="nav justify-content-end">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">소개</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">모임등록</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">모임</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">공모전</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/kakaolist">프렌즈</a>
-                </li>
-                <% if(user){ %>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">로그아웃</a>
-                </li>
-                <% }else{ %>
-                <li class="nav-item">
-                    <a class="nav-link" href="/login_form">로그인</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/signin_form">회원가입</a>
-                </li>
-                <% } %>
-            </ul>
-        </div>
-    </nav>
+    <% include ./inc/nav.ejs%>
     <div class="index_image">
         <h1>프리라이더 없는 모임 찾기</h1>
         <div class="input-group find_input">
