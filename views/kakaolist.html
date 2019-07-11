@@ -38,6 +38,40 @@
             })
 
         })
+
+    
+
+        function kakao() {
+           let searchText = $('#searchkakao').val();
+           let $target = $('#list');
+
+           $.ajax({
+               type: 'POST',
+               url: '/api/filter',
+               dataType: 'json',
+               data: {
+                   "searchText": searchText
+               },
+               success: function (list) {
+                   console.log('success');
+                   console.log(list);
+
+                   //target upadate
+                   $target.empty();
+                   $.each(list, function(i, item) {
+                       $target.append(`
+                       <img src="${list[i].img}" alt="1">
+                                <h1>${list[i].name}</h1>
+                                <p>${list[i].intro}</p>
+                                <br>
+                       `);
+                   })
+
+                  
+               }
+           });
+       }
+
     </script>
     <style>
     
@@ -45,6 +79,11 @@
 </head>
 
 <body>
+<div>
+    <input type="text" id="searchkakao" >
+    <button class="btn" id="btn_search" onclick="kakao()">찾기</button>
+</div>
+
 <div id="list" class="container"></div>
 </body>
 

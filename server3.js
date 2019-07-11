@@ -44,24 +44,7 @@ const kakao = [{
     intro: '겁 많고 마음 약한 오리 튜브'
 }];
 
-// const sampleUserList = {
-//     "user01" : {
-//     userid : "test",
-//     password: 1234,
-//     name : "Ryan",
-//     email : "test@naver.com",
-//     salt : ""
-//     },
-//     "user02" :{
-//     userid : "aaa",
-//     password: "aaa",
-//     name : "aaa",
-//     email : "aaa@naver.com",
-//     salt : ""
-//      }
-// };
 
-// fs.writeFileSync('data/userlist.json', JSON.stringify(sampleUserList, null, 4));
 let sampleUserList = {};
 if (fs.existsSync('data/userlist.json')){
     let rawdata = fs.readFileSync('data/userlist.json');
@@ -102,13 +85,18 @@ app.get('/', (req, res) => {
 
     res.render('index.html');
 })
+app.get('/test', (req, res) => {
+
+    res.render('index2.html');
+})
 app.get('/logout', (req, res)=>{
-    // console.log(req.session.user);
-    // req.session.destroy(function () {
-    //     req.session;
-    // });
-    // res.redirect('/'); 
-    
+    console.log('로그아웃시도1');
+    console.log(req.session.user);
+    req.session.destroy(function () {
+        req.session;
+    });
+    console.log('로그아웃시도2');
+    res.redirect('/'); 
 })
 
 app.get('/signin_form', (req, res) => {
@@ -297,6 +285,26 @@ app.get('/test/setlocals', (req,res) => {
     res.locals.test2 = 'test2';
     res.render('test/locals.html', {test1: 'test1'});
 })
+
+app.post('/api/filter', (req, res) => {
+    console.log(req.body);
+    console.log(req.body.searchText);
+ 
+    let kakao_name = req.body.searchText;
+    //let carNum = '22주2222';
+    let found = kakao.filter(function (element) {
+        console.log('element = ', element);
+        if (element.name === kakao_name) {
+            console.log('found');
+            return element;
+        }
+    });
+ 
+    console.log('found = ', found);
+    res.json(found);
+ 
+ });
+ 
 
 
 app.listen(port, () => {
