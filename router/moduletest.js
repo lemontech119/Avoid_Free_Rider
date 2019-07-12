@@ -1,7 +1,34 @@
 let express = require('express');
-let router = express.Router();
+let multer = require('multer');
 
-router.get('/router', function(req, res){
+console.log('라우터 시작');
+let router = express.Router();
+// let upload = multer({
+//     dest: 'uploads/'
+// });
+
+let storage = multer.diskStorage({
+    // 서버에 저장할 폴더
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/');
+    },
+    // 서버에 저장할 파일명
+    filename: function (req, file, cb) {
+        file.uploadfilename = file.originalname.substring(0, file.originalname.lastIndexOf('.'));
+        cb(null, new Date().valueOf() + '_' + file.originalname);
+    }
+});
+
+let upload = multer({
+    storage: storage,
+    limits: {
+        files: 10,
+        fileSize: 3*1024*1024
+    }
+});
+
+
+router.get('/router', function (req, res) {
     console.log('라우터 테스트')
     res.send('test')
 })
@@ -11,7 +38,6 @@ router.get('/setCookie', (req, res) => {
         maxAge: 5000,
         httpOnly: true
     });
-
 
     res.redirect('/test/getCookie');
 });
@@ -44,11 +70,29 @@ router.get('/getsession', (req, res) => {
     });
 })
 
-router.get('/setlocals', (req,res) => {
+router.get('/setlocals', (req, res) => {
     res.locals.test2 = 'test2';
-    res.render('test/locals.html', {test1: 'test1'});
+    res.render('test/locals.html', { test1: 'test1' });
+})
+
+router.get('/fileupload_form', (req, res) => {
+    res.render('test/fileupload_form.html');
+})
+router.post('/fileupload', upload.single('avatar'), (req, res) => {
+    console.log(req.file);
+    res.redirect('/fileupload_form');
+})
+
+router.get('/fileupload_multi_form', (req, res) =>{
+    res.render('test/multifile_upload.html');
+})
+//fileupload_multi
+router.post('/fileupload_multi', upload.array('photos', 3), (req, res) => {
+    console.log(req.files);
+    res.redirect('/');
 })
 
 
-
 module.exports = router;
+
+

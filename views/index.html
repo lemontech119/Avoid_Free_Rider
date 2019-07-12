@@ -26,15 +26,15 @@
         <div class="col-sm-3"></div>
         <div class="col-sm-6">
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-sm-3" onclick="location.href='/study_list'">
                     <div><i class="fas fa-book icon"></i></div>
                     <p>스터디</p>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-3" onclick="location.href='/contest_list'">
                     <div><i class="fas fa-comments-dollar icon"></i></div>
                     <p>공모전</p>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-3" onclick="location.href='/project_list'">
                     <div><i class="fas fa-users icon"></i></div>
                     <p>프로젝트</p>
                 </div>
@@ -128,7 +128,7 @@
             </div>
         </div>
     </div>
-
+    <% include ./inc/footer.ejs%>
 </body>
 
 </html>

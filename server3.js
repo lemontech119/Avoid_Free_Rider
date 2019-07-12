@@ -145,7 +145,6 @@ app.post('/signup', (req, res) => {
 });
 
 
-
 app.get('/login_form', (req, res) => {
     res.render('login_form.html');
 })
@@ -199,14 +198,6 @@ app.get('/login_success', (req, res) => {
 })
 ////////////////////////////////////////////
 
-app.get('/api/carlist', (req, res) => {
-    res.json(sampleCarList);
-})
-app.get('/carlist2', (req, res) => {
-    //테스트용
-    console.log('test');
-    res.render('carlist2.html', { obj: sampleCarList });
-})
 app.get('/api/kakaolist', (req, res) => {
     res.json(kakao);
 })
@@ -219,28 +210,6 @@ app.get('/kakaolist', (req, res) => {
         res.redirect('/login_form');
     }
 
-})
-
-app.post('/api/regcar', (req, res) => {
-    console.log('test중');
-    console.log(req.body);
-    sampleCarList.push(req.body);
-    res.json(sampleCarList)
-})
-app.get('/ejs', (req, res) => {
-    console.log('');
-    res.render('ejs.html', { userid: 'aaaa', name: '홍길동', loop: 5 });
-})
-app.get('/ejs2', (req, res) => {
-
-    console.log('0번 구역');
-    res.render('ejs.html', { userid: 'aaaa', name: '황상욱', loop: 5, title: 'EJS' })
-    console.log('0번 구역');
-})
-
-
-app.get('/main', (req, res) => {
-    res.render('main.html');
 })
 
 
