@@ -19,13 +19,35 @@ let storage = multer.diskStorage({
     }
 });
 
+
+
+let imgFileFilter = function(req, file, callback){
+    let ext = path.extname(file.originalname);
+    console.log('확장자 : ', ext);
+    if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
+        return callback(new Error('Only images are allowed'))
+    }
+    callback(null, true);
+}
 let upload = multer({
     storage: storage,
+    fileFilter : imgFileFilter,
     limits: {
         files: 10,
         fileSize: 3*1024*1024
     }
 });
+
+// router.post('/fileupload_test', imgUpload.single('avatar'), (req, res, next) => {
+//     console.log(req.file);
+//     var imgsrc = path.join('/files', req.file.filename);
+           
+//     console.log('imgsrc = ', imgsrc);
+//     res.render('test/showimage.html', {
+//         imagesrc: imgsrc
+//     })
+//     //res.send('uploaded...' + req.file.filename);
+// });
 
 
 router.get('/router', function (req, res) {

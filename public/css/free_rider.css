@@ -51,7 +51,7 @@
 .mid-box {
     height: auto; 
     min-height: 555px;
-    margin-bottom: 0px;
+    margin-bottom: 48px;
     background-color: white;
 }
 
@@ -60,3 +60,7 @@
     padding-right: 5px;
     padding-left: 5px;
 }
+
+/* .margin-box{
+    margin-top: 50px;
+} */

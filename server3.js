@@ -9,6 +9,8 @@ const fs = require('fs');
 const flash = require("connect-flash");
 const app = express();
 const port = 3000;
+const mysql = require('mysql');
+
 
 
 const sampleCarList = [{
@@ -46,10 +48,11 @@ const kakao = [{
 
 
 let sampleUserList = {};
-if (fs.existsSync('data/userlist.json')){
+if (fs.existsSync('data/userlist.json')) {
     let rawdata = fs.readFileSync('data/userlist.json');
     sampleUserList = JSON.parse(rawdata);
-    console.log(sampleUserList);    
+    console.log('userlist 있긴함');
+    //console.log(sampleUserList);
 }
 
 
@@ -64,6 +67,8 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use('/files', express.static(path.join(__dirname, 'uploads')));
+
 app.use(express.urlencoded({
     extended: false
 }));
@@ -77,10 +82,13 @@ app.use(session({
 }));
 
 
-app.use(function(req, res, next){
+app.use(function (req, res, next) {
     res.locals.user = req.session.user;
     next();
 })
+
+app.use('/files', express.static(path.join(__dirname, 'uploads')));
+
 
 //require('./part.js');
 //console.log(part.a)
@@ -91,14 +99,14 @@ app.use('/test', test_router);
 app.use(main_router);
 
 
-app.get('/logout', (req, res)=>{
+app.get('/logout', (req, res) => {
     console.log('로그아웃시도1');
     console.log(req.session.user);
     req.session.destroy(function () {
         req.session;
     });
     console.log('로그아웃시도2');
-    res.redirect('/'); 
+    res.redirect('/');
 })
 
 app.get('/signin_form', (req, res) => {
@@ -157,8 +165,8 @@ app.post('/login', (req, res) => {
     console.log('password = ', password);
     console.log('userlist = ', sampleUserList);
     let user = sampleUserList[userid];
-    
-    if(user){
+
+    if (user) {
         hasher({
             password: password,
             salt: user.salt
@@ -170,31 +178,31 @@ app.post('/login', (req, res) => {
             }
             if (hash === user.password) {
                 console.log('INFO : ', userid, ' 로그인 성공')
-               
+
                 req.session.user = sampleUserList[userid];
                 req.session.save(function () {
                     res.redirect('/login_success');
                 })
                 return;
             } else {
-               // req.flash('fmsg', '패스워드가 맞지 않습니다.');
-               res.redirect('/login_form');
-               return;
+                // req.flash('fmsg', '패스워드가 맞지 않습니다.');
+                res.redirect('/login_form');
+                return;
             }
         });
-    }else{
+    } else {
         console.log('아이디 없음');
         res.redirect('/login_form');
         return;
     }
     console.log("뒤에까지 가나요?")
- });
- 
+});
+
 app.get('/login_success', (req, res) => {
     res.render('index.html', {
         user: req.session.user,
     })
-    
+
 })
 ////////////////////////////////////////////
 
@@ -202,10 +210,10 @@ app.get('/api/kakaolist', (req, res) => {
     res.json(kakao);
 })
 app.get('/kakaolist', (req, res) => {
-    if(req.session.user){
+    if (req.session.user) {
         console.log('로그인된 사용자');
         res.render('kakaolist.html');
-    }else{
+    } else {
         console.log('로그인 안됨. 로그인 페이지 이동');
         res.redirect('/login_form');
     }
@@ -217,7 +225,7 @@ app.get('/kakaolist', (req, res) => {
 app.post('/api/filter', (req, res) => {
     console.log(req.body);
     console.log(req.body.searchText);
- 
+
     let kakao_name = req.body.searchText;
     //let carNum = '22주2222';
     let found = kakao.filter(function (element) {
@@ -227,12 +235,35 @@ app.post('/api/filter', (req, res) => {
             return element;
         }
     });
- 
+
     console.log('found = ', found);
     res.json(found);
- 
- });
- 
+
+});
+
+app.get('/member_test', (req, res) => {
+    let connection = mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: '1234',
+        port: 3306,
+        database: 'moim_db',
+        insecureAuth : true
+    });
+    connection.connect();
+
+    connection.query('SELECT * from member', function (err, rows, fields) {
+        if (!err){
+            console.log('The solution is: ', rows);
+            res.send(rows);
+        }else{
+            console.log('Error while performing Query.', err);
+        }
+    });
+
+    connection.end();
+
+})
 
 
 app.listen(port, () => {

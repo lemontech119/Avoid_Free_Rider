@@ -8,6 +8,14 @@
     <% include ./inc/nav.ejs%>
     <div class="mid-box jumbotron">
         <h1>프로젝트 모집 게시판</h1>
+        <form method="POST" action="#"> 
+            <input type="text" name="인덱스" placeholder="인덱스"><br>
+            <input type="text" name="제목" placeholder="제목"><br>
+            <input type="text" name="작성자" placeholder="작성자"><br>
+            <input type="text" name="테스트" placeholder="테스트"><br>
+            <input type="submit" value="검색">
+        </form>
+
         <table class="table">
             <thead class="thead-light">
                 <tr>
