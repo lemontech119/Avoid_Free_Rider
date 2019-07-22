@@ -18,24 +18,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                </tr>
+                <%
+                    for(let i=0; i<rows.length; i++){
+                %>
+                    <tr>
+                        <th scope="row"><%= rows[i].tableIdx%></th>
+                        <td><%= rows[i].id%></td>
+                        <td><a href='/read?tableIdx=<%=rows[i].tableIdx %>'><%= rows[i].title%></a></td>
+                    </tr>
+                <%
+                }
+                %>
             </tbody>
         </table>
     </div>

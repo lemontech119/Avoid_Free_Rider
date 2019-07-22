@@ -1,0 +1,27 @@
+<html lang="en">
+
+<head>
+    <% include ./inc/header.ejs%>
+</head>
+
+<body>
+    <% include ./inc/nav.ejs%>
+    <div class="mid-box jumbotron">
+        <h1>모임원 구인</h1>
+        <table class="show_form">
+                <tr class="table_css">
+                    <th>인덱스: <%=rows[0].tableIdx%></th>
+                    <th>작성자: <%=rows[0].id%></th>
+                    <th>제목: <%=rows[0].title%></th>
+                </tr>
+                <tr class="table_css">
+                    <td class="table_content" colspan="3"><%=rows[0].content%></td>
+                </tr>
+            </table>
+        <hr>
+
+    </div>
+    <% include ./inc/footer.ejs%>
+</body>
+
+</html>

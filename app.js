@@ -93,10 +93,13 @@ app.use('/files', express.static(path.join(__dirname, 'uploads')));
 //require('./part.js');
 //console.log(part.a)
 
+//라우터
 let test_router = require('./router/moduletest');
 let main_router = require('./router/mainrouter');
+let member_router = require('./router/memberrouter');
 app.use('/test', test_router);
 app.use(main_router);
+app.use('/member',member_router);
 
 
 app.get('/logout', (req, res) => {

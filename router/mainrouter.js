@@ -1,21 +1,117 @@
 let express = require('express');
 let router = express.Router();
+const mysql = require('mysql');
+
+let pool = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '1234',
+    port: 3306,
+    database: 'moim_db',
+    insecureAuth : true
+});
+let db_conn = true;
+
+
 
 router.get('/', (req, res) => {
 
     res.render('index.html');
 })
+
+router.get('/error', (req, res) => {
+
+    res.send('에러 발생');
+})
+
+
 router.get('/study_list', (req, res) => {
-    res.render('study_list.html');
+    if(db_conn){
+        pool.connect();
+        db_conn = false;
+    }
+    
+
+    pool.query('SELECT * from Moim where tableRole="study"', function (err, rows, fields) {
+        if (!err){
+            console.log('The solution is: ', rows);
+            res.render('study_list.ejs', {rows: rows});
+        }else{
+            console.log('Error while performing Query.', err);
+            res.send('error');
+        }
+    });
+
+    
 })
 
 router.get('/project_list', (req, res) => {
-    res.render('project_list.html');
+    if(db_conn){
+        pool.connect();
+        db_conn = false;
+    }
+    pool.query('SELECT * from Moim where tableRole="project"', function (err, rows, fields) {
+        if (!err){
+            console.log('The solution is: ', rows);
+            
+            res.render('project_list.ejs', {rows: rows});
+        }else{
+            console.log('Error while performing Query.', err);
+            
+            res.send('error');
+        }
+    });
+
 })
 
 router.get('/contest_list', (req, res) => {
-    res.render('contest_list.html');
+    if(db_conn){
+        pool.connect();
+        db_conn = false;
+    }
+    pool.query('SELECT * from Moim where tableRole="contest"', function (err, rows, fields) {
+        if (!err){
+            console.log('The solution is: ', rows);
+            res.render('contest_list.ejs', {rows: rows});
+        }else{
+            console.log('Error while performing Query.', err);
+            res.send('error');
+        }
+    });
+
 })
 
+router.get('/read', (req, res) => {
+    if(db_conn){
+        pool.connect();
+        db_conn = false;   
+    }
+    let sql = 'Select * from Moim where tableIdx = ' + req.query.tableIdx;
+    pool.query(sql, function(err, rows){
+        if (!err){
+            console.log('The solution is: ', rows);
+            res.render('tableRead.ejs', {rows: rows});
+        }else{
+            console.log('Error while performing Query.', err);
+            res.send('error');
+        }
+    })
+})
 
+router.get('/write', (req, res, rows) => {
+    let role = req.query.tableRole;
+    console.log(role);
+    res.render('writeTable.ejs', {rows: role});
+})
+
+router.post('/write_table', (req, res) => {
+    console.log(req.body);
+    // 회원가입
+    let id = req.body.id;
+    let title = req.body.title;
+    let tableRole = req.body.tableRole;
+    let content = req.body.content;
+    let sql= "insert into Moim (id, title, content, tableRole) values(" + 
+    id + ", " +  ", 'test 데이터4', 'project')"
+});
 module.exports = router;

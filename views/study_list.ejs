@@ -1,0 +1,39 @@
+<html lang="en">
+
+<head>
+    <% include ./inc/header.ejs%>
+</head>
+
+<body>
+    <% include ./inc/nav.ejs%>
+    <div class="mid-box jumbotron">
+        <h1>스터디 모집 게시판</h1>
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">인덱스</th>
+                    <th scope="col">작성자</th>
+                    <th scope="col">제목</th>
+                </tr>
+            </thead>
+            <tbody>
+            <%
+                for(let i=0; i<rows.length; i++){
+            %>
+                <tr>
+                    <th scope="row"><%= rows[i].tableIdx%></th>
+                    <td><%= rows[i].id%></td>
+                    <td><a href='/read?tableIdx=<%=rows[i].tableIdx %>'><%= rows[i].title%></a></td>
+                </tr>
+            <%
+            }
+            %>
+
+            </tbody>
+        </table>
+        <a href="/write?tableRole='study'><button type="button" class="btn btn-secondary">작성</button></a>
+    </div>
+    <% include ./inc/footer.ejs%>
+</body>
+
+</html>
