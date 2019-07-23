@@ -21,9 +21,11 @@ router.get('/', (req, res) => {
 
 router.get('/error', (req, res) => {
 
-    res.send('에러 발생');
+    res.render('error.html');
 })
-
+router.get('/404_error_template', (req, res)=>{
+    res.render('error404.html');
+})
 
 router.get('/study_list', (req, res) => {
     if(db_conn){
@@ -38,7 +40,7 @@ router.get('/study_list', (req, res) => {
             res.render('study_list.ejs', {rows: rows});
         }else{
             console.log('Error while performing Query.', err);
-            res.send('error');
+            res.redirect('/error');
         }
     });
 
@@ -58,7 +60,7 @@ router.get('/project_list', (req, res) => {
         }else{
             console.log('Error while performing Query.', err);
             
-            res.send('error');
+            res.redirect('/error');
         }
     });
 
@@ -75,7 +77,7 @@ router.get('/contest_list', (req, res) => {
             res.render('contest_list.ejs', {rows: rows});
         }else{
             console.log('Error while performing Query.', err);
-            res.send('error');
+            res.redirect('/error');
         }
     });
 
@@ -93,7 +95,7 @@ router.get('/read', (req, res) => {
             res.render('tableRead.ejs', {rows: rows});
         }else{
             console.log('Error while performing Query.', err);
-            res.send('error');
+            res.redirect('/error');
         }
     })
 })
@@ -101,6 +103,7 @@ router.get('/read', (req, res) => {
 router.get('/write', (req, res, rows) => {
     let role = req.query.tableRole;
     console.log(role);
+    console.log("role");
     res.render('writeTable.ejs', {rows: role});
 })
 
@@ -111,7 +114,32 @@ router.post('/write_table', (req, res) => {
     let title = req.body.title;
     let tableRole = req.body.tableRole;
     let content = req.body.content;
-    let sql= "insert into Moim (id, title, content, tableRole) values(" + 
-    id + ", " +  ", 'test 데이터4', 'project')"
+    let sql= "insert into Moim (id, title, content, tableRole) values(\'" + 
+    id + "\', \'" +  title + "\', \'" +  content + "\', \'" + tableRole + "\')";
+    console.log(sql);
+    pool.query(sql, function(err, rows){
+        if(!err){
+            console.log("The solution is", rows);
+            res.redirect('/study_list');
+        }else{
+            res.redirect('/error');
+        }
+    })
 });
+
+router.get('/delete', (req, res) => {
+    let tableIdx = req.query.tableIdx;
+    let sql= "delete from Moim where tableIdx="+ tableIdx;
+    console.log(sql);
+    pool.query(sql, function(err, rows){
+        if(!err){
+            console.log('delete 성공인가?');
+            res.redirect('/study_list');
+        }else {
+            console.log(err);
+            res.redirect('/error');
+        }
+    })
+
+})
 module.exports = router;

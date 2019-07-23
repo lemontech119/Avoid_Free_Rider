@@ -19,10 +19,9 @@
         <table class="table">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">인덱스</th>
+                    <th scope="col">작성자</th>
+                    <th scope="col">제목</th>
                 </tr>
             </thead>
             <tbody>
@@ -39,6 +38,7 @@
                 %>
             </tbody>
         </table>
+        <a href="/write?tableRole='project'"><button type="button" class="btn btn-secondary">작성</button></a>
     </div>
     <% include ./inc/footer.ejs%>
 </body>

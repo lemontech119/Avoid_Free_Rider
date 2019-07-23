@@ -6,12 +6,13 @@
 
 <body>
     <% include ./inc/nav.ejs%>
+    
     <div class="mid-box jumbotron">
         <form action="/write_table" method="POST">
             <div class="form-group">
                 <label for="id">작성자: </label><input type="text" name="id" id="id" value=<%=user.userId%>><br>
                 <label for="title">제목: </label><input type="text" name="title" id="title" value=""><br>
-                <label for="tableRole">구분: </label><input type="text" name="tableRole" id="tableRole" value=<%=rows[0].role%>><br>
+                <label for="tableRole">구분: </label><input type="text" name="tableRole" id="tableRole" value=<%=rows.role%>><br>
                 <textarea name="content" class="form-control">
 
                 </textarea>

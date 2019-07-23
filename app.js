@@ -8,28 +8,9 @@ const morgan = require('morgan');
 const fs = require('fs');
 const flash = require("connect-flash");
 const app = express();
-const port = 3000;
+const port = 5050;
 const mysql = require('mysql');
 
-
-
-const sampleCarList = [{
-    carNumber: '11주1111',
-    owner: '홍길동',
-    model: 'SONATA',
-    company: 'HYUNDAI',
-    numOfAccident: 2,
-    numOfOwnerChange: 1
-},
-{
-    carNumber: '22주2222',
-    owner: '손오공',
-    model: 'MORNING',
-    company: 'KIA',
-    numOfAccident: 1,
-    numOfOwnerChange: 3
-}
-];
 const kakao = [{
     img: 'image/ryan.jpg',
     name: '라이언',
@@ -73,6 +54,8 @@ app.use(express.urlencoded({
     extended: false
 }));
 
+
+
 app.use(cookieparser());
 app.use(session({
     secret: '1A@W#E$E',
@@ -101,112 +84,10 @@ app.use('/test', test_router);
 app.use(main_router);
 app.use('/member',member_router);
 
-
-app.get('/logout', (req, res) => {
-    console.log('로그아웃시도1');
-    console.log(req.session.user);
-    req.session.destroy(function () {
-        req.session;
-    });
-    console.log('로그아웃시도2');
-    res.redirect('/');
-})
-
-app.get('/signin_form', (req, res) => {
-    res.render('signin_form.html');
-})
-
-app.get('/signin', (req, res) => {
-    //추후 자세히 추가
-    res.render('index.html');
-})
-
-app.post('/signup', (req, res) => {
-    console.log(req.body);
-    // 회원가입
-    let userid = req.body.userid;
-    let password = req.body.password;
-    let name = req.body.name;
-    let email = req.body.email;
-    console.log('userid = ', userid);
-    console.log('password = ', password);
-    console.log('name = ', name);
-    console.log('email = ', email);
-
-    hasher({
-        password: req.body.password
-    }, (err, pass, salt, hash) => {
-        if (err) {
-            console.log('ERR: ', err);
-            res.redirect('/signup_form');
-        }
-        let user = {
-            userid: userid,
-            password: hash,
-            salt: salt,
-            name: name,
-            email: email
-        }
-        sampleUserList[userid] = user;
-        fs.writeFileSync('data/userlist.json', JSON.stringify(sampleUserList, null, 4));
-
-        console.log('user added : ', user);
-        res.redirect('/login_form');
-    });
+app.use(function(req, res, next){
+    res.status(404).render('error404.html');
 });
 
-
-app.get('/login_form', (req, res) => {
-    res.render('login_form.html');
-})
-
-app.post('/login', (req, res) => {
-    console.log(req.body);
-    let userid = req.body.userid;
-    let password = req.body.password;
-    console.log('userid = ', userid);
-    console.log('password = ', password);
-    console.log('userlist = ', sampleUserList);
-    let user = sampleUserList[userid];
-
-    if (user) {
-        hasher({
-            password: password,
-            salt: user.salt
-        }, function (err, pass, salt, hash) {
-            if (err) {
-                console.log('ERR : ', err);
-                //req.flash('fmsg', '오류가 발생했습니다.');
-                res.redirect('login_form');
-            }
-            if (hash === user.password) {
-                console.log('INFO : ', userid, ' 로그인 성공')
-
-                req.session.user = sampleUserList[userid];
-                req.session.save(function () {
-                    res.redirect('/login_success');
-                })
-                return;
-            } else {
-                // req.flash('fmsg', '패스워드가 맞지 않습니다.');
-                res.redirect('/login_form');
-                return;
-            }
-        });
-    } else {
-        console.log('아이디 없음');
-        res.redirect('/login_form');
-        return;
-    }
-    console.log("뒤에까지 가나요?")
-});
-
-app.get('/login_success', (req, res) => {
-    res.render('index.html', {
-        user: req.session.user,
-    })
-
-})
 ////////////////////////////////////////////
 
 app.get('/api/kakaolist', (req, res) => {
@@ -267,6 +148,7 @@ app.get('/member_test', (req, res) => {
     connection.end();
 
 })
+
 
 
 app.listen(port, () => {
