@@ -3,7 +3,7 @@ let router = express.Router();
 const mysql = require('mysql');
 
 let pool = mysql.createConnection({
-    host: 'localhost',
+    host: '70.12.50.164',
     user: 'root',
     password: '1234',
     port: 3306,
@@ -116,6 +116,7 @@ router.post('/write_table', (req, res) => {
     let content = req.body.content;
     let sql= "insert into Moim (id, title, content, tableRole) values(\'" + 
     id + "\', \'" +  title + "\', \'" +  content + "\', \'" + tableRole + "\')";
+    
     console.log(sql);
     pool.query(sql, function(err, rows){
         if(!err){

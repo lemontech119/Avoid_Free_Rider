@@ -8,8 +8,9 @@ const morgan = require('morgan');
 const fs = require('fs');
 const flash = require("connect-flash");
 const app = express();
-const port = 5050;
+const port = 3000;
 const mysql = require('mysql');
+
 
 const kakao = [{
     img: 'image/ryan.jpg',
@@ -80,13 +81,14 @@ app.use('/files', express.static(path.join(__dirname, 'uploads')));
 let test_router = require('./router/moduletest');
 let main_router = require('./router/mainrouter');
 let member_router = require('./router/memberrouter');
+let mysql_router = require('./router/mysqlrouter')();
+
 app.use('/test', test_router);
 app.use(main_router);
 app.use('/member',member_router);
+app.use('/mysql', mysql_router);
 
-app.use(function(req, res, next){
-    res.status(404).render('error404.html');
-});
+
 
 ////////////////////////////////////////////
 
@@ -99,7 +101,7 @@ app.get('/kakaolist', (req, res) => {
         res.render('kakaolist.html');
     } else {
         console.log('로그인 안됨. 로그인 페이지 이동');
-        res.redirect('/login_form');
+        res.redirect('/member/login_form');
     }
 
 })
@@ -149,6 +151,9 @@ app.get('/member_test', (req, res) => {
 
 })
 
+app.use(function(req, res, next){
+    res.status(404).render('error404.html');
+});
 
 
 app.listen(port, () => {
