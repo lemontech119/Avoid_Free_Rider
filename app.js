@@ -10,7 +10,8 @@ const flash = require("connect-flash");
 const app = express();
 const port = 3000;
 const mysql = require('mysql');
-
+const dbconnect = require('./schemas');
+dbconnect();
 
 const kakao = [{
     img: 'image/ryan.jpg',
@@ -81,13 +82,14 @@ app.use('/files', express.static(path.join(__dirname, 'uploads')));
 let test_router = require('./router/moduletest');
 let main_router = require('./router/mainrouter');
 let member_router = require('./router/memberrouter');
-let mysql_router = require('./router/mysqlrouter')();
+//let mysql_router = require('./router/mysqlrouter')();
+let mongorouter = require('./router/mongorouter')();
 
 app.use('/test', test_router);
 app.use(main_router);
 app.use('/member',member_router);
-app.use('/mysql', mysql_router);
-
+//app.use('/mysql', mysql_router);
+app.use('/mongo', mongorouter);
 
 
 ////////////////////////////////////////////
